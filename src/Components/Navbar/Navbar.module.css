@@ -1,0 +1,34 @@
+.wrapper {
+    grid-area: n;
+    background-color: green;
+    color: white;
+}
+.item{
+    color: white;
+    text-decoration: none;
+}
+.activeLink{
+    color: gold;
+}
+.nav{
+    margin-bottom: 3rem;
+}
+.mainFriend{
+    display: flex;
+    justify-content: space-around;
+}
+
+h2{
+    text-align: center;
+}
+
+.friend{
+    /*display: inline-flex;*/
+    /*justify-content: space-around;*/
+}
+
+.friend:before{
+    color: yellow;
+    content: ' \25CF';
+    font-size: 200px;
+}
