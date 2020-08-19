@@ -28,6 +28,7 @@ export type DialogsPageType = {
 
 export type ProfilePageType = {
     posts: Array<PostItemType>
+    newPostText: string
 }
 
 export type FriendsPageSectionType = {
@@ -67,7 +68,8 @@ let state: StateType = {
             {id: 4, post: 'Wazzup', likesCount: 120},
             {id: 5, post: 'Salut', likesCount: 122},
             {id: 6, post: 'Zdarova', likesCount: 512}
-        ]
+        ],
+        newPostText: ''
     },
     sideBar: {
         friends: [
@@ -78,13 +80,19 @@ let state: StateType = {
     }
 }
 
-export let addPost = (postMessage: string) => {
+export let addPost = () => {
     const newPost: PostItemType = {
         id: 5,
-        post: postMessage,
+        post: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ''
+    rerenderEntireTree(state)
+}
+
+export let updateNewPostText = (postText: string) => {
+    state.profilePage.newPostText = postText
     rerenderEntireTree(state)
 }
 

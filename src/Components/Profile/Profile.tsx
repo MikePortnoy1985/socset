@@ -5,15 +5,17 @@ import ProfileInfo from "./Profileinfo/ProfileInfo";
 import {PostItemType} from "../redux/state";
 
 type ProfilePropsType = {
+    newText: string
     posts:Array<PostItemType>
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (newPostText: string) => void
 }
 
 const Profile = (props:ProfilePropsType) => {
     return(
         <div>
             <ProfileInfo/>
-            <MyPosts posts={props.posts} addPost={props.addPost}/>
+            <MyPosts posts={props.posts} newText={props.newText} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>
         </div>
     );
 }

@@ -10,7 +10,8 @@ import {StateType} from "./Components/redux/state";
 
 type AppPropsType = {
     AppState: StateType
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (newPostText: string) => void
 }
 
 const App = (props:AppPropsType) => {
@@ -21,7 +22,7 @@ const App = (props:AppPropsType) => {
               <Navbar friends={props.AppState.sideBar.friends}/>
               <div className="app-wrapper-content">
                   <Route path='/dialogs' render={ () => <Dialogs dialogs={props.AppState.dialogsPage.dialogData} messages={props.AppState.dialogsPage.messageData}/>}/>
-                  <Route path='/profile' render={ () => <Profile posts={props.AppState.profilePage.posts} addPost={props.addPost}/>}/>
+                  <Route path='/profile' render={ () => <Profile posts={props.AppState.profilePage.posts} newText={props.AppState.profilePage.newPostText} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
               </div>
           </div>
       </BrowserRouter>

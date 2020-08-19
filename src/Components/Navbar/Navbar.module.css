@@ -27,8 +27,8 @@ h2{
     /*justify-content: space-around;*/
 }
 
-.friend:before{
-    color: yellow;
-    content: ' \25CF';
-    font-size: 200px;
-}
+/*.friend:before{*/
+/*    color: yellow;*/
+/*    content: ' \25CF';*/
+/*    font-size: 200px;*/
+/*}*/

@@ -18,7 +18,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "BROWSER='google-chrome-stable' react-scripts start",
+    "start": "BROWSER=firefox-developer-edition react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
