@@ -1,32 +1,45 @@
-import React from 'react';
-import Header from "./Components/Header/Header";
-import Navbar from "./Components/Navbar/Navbar";
-import Profile from "./Components/Profile/Profile";
-import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from 'react-router-dom';
-import './App.css';
-import {StateType} from "./Components/redux/state";
-
+import React from 'react'
+import Header from './Components/Header/Header'
+import Navbar from './Components/Navbar/Navbar'
+import Profile from './Components/Profile/Profile'
+import Dialogs from './Components/Dialogs/Dialogs'
+import { BrowserRouter, Route } from 'react-router-dom'
+import './App.css'
+import { StoreType } from './Components/redux/state'
 
 type AppPropsType = {
-    AppState: StateType
-    addPost: () => void
-    updateNewPostText: (newPostText: string) => void
+	store: StoreType
 }
 
-const App = (props:AppPropsType) => {
-  return (
-      <BrowserRouter>
-          <div className="App-wrapper">
-              <Header/>
-              <Navbar friends={props.AppState.sideBar.friends}/>
-              <div className="app-wrapper-content">
-                  <Route path='/dialogs' render={ () => <Dialogs dialogs={props.AppState.dialogsPage.dialogData} messages={props.AppState.dialogsPage.messageData}/>}/>
-                  <Route path='/profile' render={ () => <Profile posts={props.AppState.profilePage.posts} newText={props.AppState.profilePage.newPostText} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
-              </div>
-          </div>
-      </BrowserRouter>
-  );
+const App = (props: AppPropsType) => {
+	const store = props.store.getState()
+	return (
+		<BrowserRouter>
+			<div className='App-wrapper'>
+				<Header />
+				<Navbar friends={store.sideBar.friends} />
+				<div className='app-wrapper-content'>
+					<Route
+						path='/dialogs'
+						render={() => (
+							<Dialogs dialogs={store.dialogsPage.dialogData} messages={store.dialogsPage.messageData} />
+						)}
+					/>
+					<Route
+						path='/profile'
+						render={() => (
+							<Profile
+								posts={store.profilePage.posts}
+								newText={store.profilePage.newPostText}
+								addPost={props.store.addPost.bind(props.store)}
+								updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+							/>
+						)}
+					/>
+				</div>
+			</div>
+		</BrowserRouter>
+	)
 }
 
-export default App;
+export default App
