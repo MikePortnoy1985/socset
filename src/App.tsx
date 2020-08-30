@@ -22,7 +22,12 @@ const App = (props: AppPropsType) => {
 					<Route
 						path='/dialogs'
 						render={() => (
-							<Dialogs dialogs={store.dialogsPage.dialogData} messages={store.dialogsPage.messageData} />
+							<Dialogs
+								dialogs={store.dialogsPage.dialogData}
+								messages={store.dialogsPage.messageData}
+								newMessageDataMessage={store.dialogsPage.newMessageDataMessage}
+								dispatch={props.store.dispatch.bind(props.store)}
+							/>
 						)}
 					/>
 					<Route
@@ -31,8 +36,7 @@ const App = (props: AppPropsType) => {
 							<Profile
 								posts={store.profilePage.posts}
 								newText={store.profilePage.newPostText}
-								addPost={props.store.addPost.bind(props.store)}
-								updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+								dispatch={props.store.dispatch.bind(props.store)}
 							/>
 						)}
 					/>

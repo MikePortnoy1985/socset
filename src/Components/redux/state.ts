@@ -22,6 +22,7 @@ export type FriendsType = {
 export type DialogsPageType = {
 	messageData: Array<MessageItemType>
 	dialogData: Array<DialogItemType>
+	newMessageDataMessage: string
 }
 
 export type ProfilePageType = {
@@ -39,14 +40,24 @@ export type StateType = {
 	sideBar: FriendsPageSectionType
 }
 
+export type ActionType = {
+	type: string
+	postText?: string
+	message?: string
+}
+
 export type StoreType = {
 	_state: StateType
-	updateNewPostText: (newPost: string) => void
-	addPost: () => void
 	_rerenderEntireTree: () => void
 	subscribe: (callback: () => void) => void
 	getState: () => StateType
+	dispatch: (action: ActionType) => void
 }
+
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const UPDATE_NEW_MESSAGE_DATA_MESSAGE = 'UPDATE-NEW-MESSAGE-DATA-MESSAGE'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
 const store: StoreType = {
 	_state: {
@@ -67,6 +78,7 @@ const store: StoreType = {
 				{ id: 5, name: 'Viktor' },
 				{ id: 6, name: 'Valera' },
 			],
+			newMessageDataMessage: '',
 		},
 		profilePage: {
 			posts: [
@@ -90,26 +102,47 @@ const store: StoreType = {
 	_rerenderEntireTree() {
 		console.log('State changed')
 	},
-	updateNewPostText(postText: string) {
-		this._state.profilePage.newPostText = postText
-		this._rerenderEntireTree()
-	},
-	addPost() {
-		const newPost: PostItemType = {
-			id: 5,
-			post: this._state.profilePage.newPostText,
-			likesCount: 0,
-		}
-		this._state.profilePage.posts.push(newPost)
-		this._state.profilePage.newPostText = ''
-		this._rerenderEntireTree()
-	},
 	subscribe(observer) {
 		this._rerenderEntireTree = observer
 	},
 	getState() {
 		return this._state
-	}
+	},
+	dispatch(action: ActionType) {
+		if (action.type === ADD_POST) {
+			let newPost: PostItemType = {
+				id: 5,
+				post: this._state.profilePage.newPostText,
+				likesCount: 0,
+			}
+			this._state.profilePage.posts.push(newPost)
+			this._state.profilePage.newPostText = ''
+			this._rerenderEntireTree()
+		} else if (action.type === UPDATE_NEW_POST_TEXT) {
+			if (action.postText) {
+				this._state.profilePage.newPostText = action.postText
+				this._rerenderEntireTree()
+			}
+		} else if (action.type === SEND_MESSAGE) {
+			let body = this._state.dialogsPage.newMessageDataMessage
+			this._state.dialogsPage.newMessageDataMessage = ''
+			this._state.dialogsPage.messageData.push({ id: 7, message: body })
+			this._rerenderEntireTree()
+		} else if (action.type === UPDATE_NEW_MESSAGE_DATA_MESSAGE) {
+			if (action.message) {
+				this._state.dialogsPage.newMessageDataMessage = action.message
+				this._rerenderEntireTree()
+			}
+		} 
+	},
 }
+
+export const addPostCreator = () => ({ type: ADD_POST })
+
+export const updateNewPostTextActionCreator = (text: string) => ({ type: UPDATE_NEW_POST_TEXT, postText: text })
+
+export const addMessageCreator = () => ({ type: SEND_MESSAGE })
+
+export const updateNewPostMessageDataMessageCreator = (message: string) => ({ type: UPDATE_NEW_MESSAGE_DATA_MESSAGE, message: message })
 
 export default store
