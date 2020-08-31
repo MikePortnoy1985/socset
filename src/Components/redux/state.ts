@@ -1,3 +1,7 @@
+import profilePageReducer from "./ProfilePageReducer"
+import dialogsPageReducer from "./DialogsPageReduce"
+import sideBarReducer from "./sideBarReducer"
+
 export type DialogItemType = {
 	id: number
 	name: string
@@ -42,8 +46,8 @@ export type StateType = {
 
 export type ActionType = {
 	type: string
-	postText?: string
-	message?: string
+	postText?: string 
+	message?: string 
 }
 
 export type StoreType = {
@@ -53,11 +57,6 @@ export type StoreType = {
 	getState: () => StateType
 	dispatch: (action: ActionType) => void
 }
-
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const UPDATE_NEW_MESSAGE_DATA_MESSAGE = 'UPDATE-NEW-MESSAGE-DATA-MESSAGE'
-const SEND_MESSAGE = 'SEND-MESSAGE'
 
 const store: StoreType = {
 	_state: {
@@ -109,40 +108,14 @@ const store: StoreType = {
 		return this._state
 	},
 	dispatch(action: ActionType) {
-		if (action.type === ADD_POST) {
-			let newPost: PostItemType = {
-				id: 5,
-				post: this._state.profilePage.newPostText,
-				likesCount: 0,
-			}
-			this._state.profilePage.posts.push(newPost)
-			this._state.profilePage.newPostText = ''
-			this._rerenderEntireTree()
-		} else if (action.type === UPDATE_NEW_POST_TEXT) {
-			if (action.postText) {
-				this._state.profilePage.newPostText = action.postText
-				this._rerenderEntireTree()
-			}
-		} else if (action.type === SEND_MESSAGE) {
-			let body = this._state.dialogsPage.newMessageDataMessage
-			this._state.dialogsPage.newMessageDataMessage = ''
-			this._state.dialogsPage.messageData.push({ id: 7, message: body })
-			this._rerenderEntireTree()
-		} else if (action.type === UPDATE_NEW_MESSAGE_DATA_MESSAGE) {
-			if (action.message) {
-				this._state.dialogsPage.newMessageDataMessage = action.message
-				this._rerenderEntireTree()
-			}
-		} 
+		profilePageReducer(this._state.profilePage, action)
+		dialogsPageReducer(this._state.dialogsPage, action)
+		sideBarReducer(this._state.sideBar,action)
+		this._rerenderEntireTree()
 	},
 }
 
-export const addPostCreator = () => ({ type: ADD_POST })
 
-export const updateNewPostTextActionCreator = (text: string) => ({ type: UPDATE_NEW_POST_TEXT, postText: text })
 
-export const addMessageCreator = () => ({ type: SEND_MESSAGE })
-
-export const updateNewPostMessageDataMessageCreator = (message: string) => ({ type: UPDATE_NEW_MESSAGE_DATA_MESSAGE, message: message })
 
 export default store

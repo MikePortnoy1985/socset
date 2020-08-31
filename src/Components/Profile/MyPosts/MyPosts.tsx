@@ -1,7 +1,8 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
-import { PostItemType, ActionType, addPostCreator, updateNewPostTextActionCreator } from '../../redux/state'
+import { PostItemType, ActionType } from '../../redux/state'
+import { addPostCreator, updateNewPostTextActionCreator } from '../../redux/ProfilePageReducer'
 
 type MyPostsPropsType = {
 	newText: string
