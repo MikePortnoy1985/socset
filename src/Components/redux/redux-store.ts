@@ -17,7 +17,7 @@ let store = createStore(reducers)
 export type ReduxType = {
 	subscribe: (callback: () => void) => void
 	getState: () => reduxStoreType
-	dispatch: (action: any) => void
+	dispatch: ({type}:{type:string}) => void
 }
 
 export type DialogItemType = {

@@ -8,6 +8,7 @@ const MyPostsContainer = () => {
 		<StoreContext.Consumer>
 			{(store) => {
 				const state = store.getState()
+				
 				let addPost = () => {
 					store.dispatch(addPostCreator())
 				}
