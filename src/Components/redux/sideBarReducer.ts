@@ -1,8 +1,15 @@
-import { FriendsPageSectionType, ActionType } from "./state"
+import { ActionType, FriendsPageSectionType } from './redux-store'
 
-const sideBarReducer = (state:FriendsPageSectionType, action:ActionType) => {
-	return state
+let initialStore = {
+	friends: [
+		{ id: 1, name: 'Vasya' },
+		{ id: 2, name: 'Petya' },
+		{ id: 3, name: 'Kolya' },
+	],
 }
 
+const sideBarReducer = (state: FriendsPageSectionType = initialStore, action: ActionType) => {
+	return state
+}
 
 export default sideBarReducer

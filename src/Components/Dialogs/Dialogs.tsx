@@ -2,15 +2,16 @@ import React, { ChangeEvent } from 'react'
 import classes from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
-import { DialogItemType, MessageItemType, ActionType } from '../redux/state'
-import { addMessageCreator, updateNewPostMessageDataMessageCreator } from '../redux/DialogsPageReduce'
+import { DialogItemType, MessageItemType } from '../redux/redux-store'
+
 
 
 type DialogsPropsType = {
 	dialogs: Array<DialogItemType>
 	messages: Array<MessageItemType>
 	newMessageDataMessage: string
-	dispatch: (action:ActionType)=> void
+	updateNewPostMessage: (newMessage:string)=> void
+	sendMessage: () => void
 }
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -21,13 +22,13 @@ const Dialogs = (props: DialogsPropsType) => {
 	let newMessageDataMessage = props.newMessageDataMessage
 
 	let onSendMessageClick = () => {
-		props.dispatch(addMessageCreator())
+		props.sendMessage()
 	}
 
 	let onNewMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		if (event) {
 			let newMessage = event.currentTarget.value
-			props.dispatch(updateNewPostMessageDataMessageCreator(newMessage))
+			props.updateNewPostMessage(newMessage)
 		}
 	}
 

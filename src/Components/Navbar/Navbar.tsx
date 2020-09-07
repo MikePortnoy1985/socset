@@ -1,14 +1,14 @@
 import React from 'react'
 import classes from './Navbar.module.css'
 import { NavLink } from 'react-router-dom'
-import { FriendsType } from '../redux/state'
 
-type NavbarPropsTyp = {
-	friends: Array<FriendsType>
-}
 
-const Navbar = (props: NavbarPropsTyp) => {
-	const friend = props.friends.map((f: FriendsType) => <div className={classes.friend}>{f.name}</div>)
+
+
+const Navbar = () => {
+	
+
+	// const friend = friends.friends.map((f: FriendsType) => <div className={classes.friend}>{f.name}</div>)
 
 	return (
 		<div className={classes.wrapper}>
@@ -39,8 +39,8 @@ const Navbar = (props: NavbarPropsTyp) => {
 					</NavLink>
 				</div>
 			</nav>
-			<h2>Friends</h2>
-			<div className={classes.mainFriend}>{friend}</div>
+			{/* <h2>Friends</h2>
+			<div className={classes.mainFriend}>{friend}</div> */}
 		</div>
 	)
 }
