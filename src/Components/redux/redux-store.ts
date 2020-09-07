@@ -9,11 +9,12 @@ const reducers = combineReducers({
 	sideBarReducer: sideBarReducer,
 })
 
-export type reduxStoreType = ReturnType<typeof reducers>
+type reduсersType = typeof reducers
+export type reduxStoreType = ReturnType<reduсersType>
 
 let store = createStore(reducers)
 
-export type ReduxStoreType = {
+export type ReduxType = {
 	subscribe: (callback: () => void) => void
 	getState: () => reduxStoreType
 	dispatch: (action: any) => void
