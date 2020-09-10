@@ -1,56 +1,53 @@
-import React, { ChangeEvent } from 'react'
+import React, {ChangeEvent} from 'react'
 import classes from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem'
 import Message from './Message/Message'
-import { DialogItemType, MessageItemType } from '../redux/redux-store'
-
-
+import {DialogItemType, DialogsPageType, MessageItemType} from '../redux/redux-store'
 
 type DialogsPropsType = {
-	dialogs: Array<DialogItemType>
-	messages: Array<MessageItemType>
-	newMessageDataMessage: string
-	updateNewPostMessage: (newMessage:string)=> void
-	sendMessage: () => void
+    dialogs: DialogsPageType
+    updateNewPostMessage: (newMessage: string) => void
+    sendMessage: () => void
 }
 
-const Dialogs = (props: DialogsPropsType) => {
-	const dialogItems = props.dialogs.map((p: DialogItemType) => <DialogItem name={p.name} id={p.id} />)
+const Dialogs = ({dialogs, updateNewPostMessage, sendMessage}: DialogsPropsType) => {
+    const dialogItems = dialogs.dialogData.map((p: DialogItemType) => <DialogItem name={p.name} id={p.id} key={p.id}/>)
 
-	const messagesElements = props.messages.map((p: MessageItemType) => <Message message={p.message} />)
+    const messagesElements = dialogs.messageData.map((p: MessageItemType) => <Message message={p.message} key={p.id}/>)
 
-	let newMessageDataMessage = props.newMessageDataMessage
+    let newMessageDataMessage = dialogs.newMessageDataMessage
 
-	let onSendMessageClick = () => {
-		props.sendMessage()
-	}
+    let onSendMessageClick = () => {
+        sendMessage()
+    }
 
-	let onNewMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-		if (event) {
-			let newMessage = event.currentTarget.value
-			props.updateNewPostMessage(newMessage)
-		}
-	}
+    let onNewMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        if (event) {
+            let newMessage = event.currentTarget.value
+            updateNewPostMessage(newMessage)
+        }
+    }
 
-	return (
-		<div className={classes.dialogs}>
-			<div className={classes.dialogsItems}>{dialogItems}</div>
-			<div className={classes.Messages}>
-				{messagesElements}
-				<div>
-					<div>
+    return (
+        <div className={classes.dialogs}>
+            <div className={classes.dialogsItems}>{dialogItems}</div>
+            <div className={classes.Messages}>
+                {messagesElements}
+                <div>
+                    <div>
 						<textarea
-							value={newMessageDataMessage}
-							onChange={onNewMessageChange}
-							placeholder={'Enter your message'}></textarea>
-					</div>
-					<div>
-						<button onClick={onSendMessageClick}>Send</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	)
+                            value={newMessageDataMessage}
+                            onChange={onNewMessageChange}
+                            placeholder={'Enter your message'}>
+						</textarea>
+                    </div>
+                    <div>
+                        <button onClick={onSendMessageClick}>Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Dialogs
