@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
-import {PostItemType, ProfilePageType} from '../../redux/redux-store'
+import { PostItemType, ProfilePageType } from '../../redux/redux-store'
 
 type MyPostsPropsType = {
 	posts: ProfilePageType
@@ -9,10 +9,8 @@ type MyPostsPropsType = {
 	addPost: () => void
 }
 
-const MyPosts = ({posts, updateNewPostText, addPost}: MyPostsPropsType) => {
-	const postsElements = posts.posts.map((p: PostItemType) => (
-		<Post id={p.id} message={p.post} likesCount={p.likesCount} />
-	))
+const MyPosts = ({ posts, updateNewPostText, addPost }: MyPostsPropsType) => {
+	const postsElements = posts.posts.map((p: PostItemType) => <Post id={p.id} message={p.post} likesCount={p.likesCount} />)
 
 	let newPostElement = React.createRef<HTMLTextAreaElement>()
 

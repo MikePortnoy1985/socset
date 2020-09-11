@@ -1,4 +1,4 @@
-import { ActionType, PostItemType, ProfilePageType } from './redux-store'
+import { ActionType, addPostACType, PostItemType, ProfilePageType, updateNewPostTextACType } from './redux-store'
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -15,34 +15,32 @@ let initialStore = {
 	newPostText: '',
 }
 
-const profilePageReducer = (state:ProfilePageType = initialStore, action: ActionType) => {
+const profilePageReducer = (state: ProfilePageType = initialStore, action: ActionType) => {
 	switch (action.type) {
-		case ADD_POST: {
+		case ADD_POST:
 			let newPost: PostItemType = {
 				id: 5,
 				post: state.newPostText,
 				likesCount: 0,
 			}
-			let stateCopy = {...state}
-			stateCopy.posts = [...state.posts]
-			stateCopy.posts.push(newPost)
-			stateCopy.newPostText=''
-			return stateCopy
-		}
-		case UPDATE_NEW_POST_TEXT: {
-			let stateCopy = {...state}
-			if (action.postText) {
-				stateCopy.newPostText = action.postText
+			return {
+				...state,
+				posts: [...state.posts, newPost],
+				newPostText: '',
 			}
-			return stateCopy
-		}
+		case UPDATE_NEW_POST_TEXT:
+			if (action.postText)
+				return {
+					...state,
+					newPostText: action.postText,
+				}
 		default:
 			return state
 	}
 }
 
-export const addPostCreator = () => ({ type: ADD_POST })
+export const addPostAC = (): addPostACType => ({ type: ADD_POST })
 
-export const updateNewPostTextActionCreator = (text: string) => ({ type: UPDATE_NEW_POST_TEXT, postText: text })
+export const updateNewPostTextAC = (text: string): updateNewPostTextACType => ({ type: UPDATE_NEW_POST_TEXT, postText: text })
 
 export default profilePageReducer

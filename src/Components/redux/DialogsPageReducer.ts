@@ -1,4 +1,4 @@
-import { ActionType, DialogsPageType } from './redux-store'
+import { ActionType, addMessageACType, DialogsPageType, updateNewPostMessageDataMessageACType } from './redux-store'
 
 const UPDATE_NEW_MESSAGE_DATA_MESSAGE = 'UPDATE-NEW-MESSAGE-DATA-MESSAGE'
 const SEND_MESSAGE = 'SEND-MESSAGE'
@@ -23,31 +23,29 @@ let initialStore = {
 	newMessageDataMessage: '',
 }
 
-const dialogsPageReducer = (state:DialogsPageType = initialStore, action: ActionType) => {
+const dialogsPageReducer = (state: DialogsPageType = initialStore, action: ActionType) => {
 	switch (action.type) {
-		case SEND_MESSAGE: {
-			let stateCopy = {...state}
+		case SEND_MESSAGE:
 			let body = state.newMessageDataMessage
-			stateCopy.newMessageDataMessage = ''
-			stateCopy.messageData = [...state.messageData]
-			stateCopy.messageData.push({id: 7, message: body})
-			return stateCopy
-		}
-		case UPDATE_NEW_MESSAGE_DATA_MESSAGE: {
-			let stateCopy = {...state}
-			if (action.message) {
-				stateCopy.newMessageDataMessage = action.message
+			return {
+				...state,
+				newMessageDataMessage: '',
+				messageData: [...state.messageData, { id: 7, message: body }],
 			}
-			return stateCopy
-		}
+		case UPDATE_NEW_MESSAGE_DATA_MESSAGE:
+			if (action.message)
+				return {
+					...state,
+					newMessageDataMessage: action.message,
+				}
 		default:
 			return state
 	}
 }
 
-export const addMessageCreator = () => ({ type: SEND_MESSAGE })
+export const addMessageAC = (): addMessageACType => ({ type: SEND_MESSAGE })
 
-export const updateNewPostMessageDataMessageCreator = (message: string) => ({
+export const updateNewPostMessageDataMessageAC = (message: string): updateNewPostMessageDataMessageACType => ({
 	type: UPDATE_NEW_MESSAGE_DATA_MESSAGE,
 	message: message,
 })

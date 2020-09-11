@@ -1,12 +1,14 @@
 import { createStore, combineReducers } from 'redux'
 import profilePageReducer from './ProfilePageReducer'
 import dialogsPageReducer from './DialogsPageReducer'
-import sideBarReducer from './sideBarReducer'
+import sideBarReducer from './SideBarReducer'
+import usersPageReducer from './UsersPageReducer'
 
 const reducers = combineReducers({
 	profilePageReducer: profilePageReducer,
 	dialogsPageReducer: dialogsPageReducer,
 	sideBarReducer: sideBarReducer,
+	usersPageReducer: usersPageReducer,
 })
 
 type reducersType = typeof reducers
@@ -14,11 +16,13 @@ export type reduxStoreType = ReturnType<reducersType>
 
 let store = createStore(reducers)
 
-export type ReduxType = {
-	subscribe: (callback: () => void) => void
-	getState: () => reduxStoreType
-	dispatch: ({type}:{type:string}) => void
-}
+// export type ReduxType = {
+// 	subscribe: (callback: () => void) => void
+// 	getState: () => reduxStoreType
+// 	dispatch: ({ type }: { type: string }) => void
+// }
+
+//////////////////////////////// ======>> StateTypes <<======== ///////////////////////////////////////////////////
 
 export type DialogItemType = {
 	id: number
@@ -39,6 +43,24 @@ export type PostItemType = {
 export type FriendsType = {
 	id: number
 	name: string
+}
+
+export type UserLocationType = {
+	city: string
+	country: string
+}
+
+export type UserType = {
+	id: number
+	photoUrl: string
+	followed: boolean
+	fullName: string
+	status: string
+	location: UserLocationType
+}
+
+export type UsersPageType = {
+	users: Array<UserType>
 }
 
 export type DialogsPageType = {
@@ -62,10 +84,48 @@ export type StateType = {
 	sideBar: FriendsPageSectionType
 }
 
-export type ActionType = {
-	type: string
-	postText?: string 
-	message?: string 
+//////////////////////////////// ======>> ActionTypes <<======== ///////////////////////////////////////////////////
+
+export type ActionType =
+	| addPostACType
+	| updateNewPostTextACType
+	| addMessageACType
+	| updateNewPostMessageDataMessageACType
+	| followACType
+	| unfollowACType
+	| setUsersACType
+
+export type addPostACType = {
+	type: 'ADD-POST'
+}
+
+export type updateNewPostTextACType = {
+	type: 'UPDATE-NEW-POST-TEXT'
+	postText: string
+}
+
+export type addMessageACType = {
+	type: 'SEND-MESSAGE'
+}
+
+export type updateNewPostMessageDataMessageACType = {
+	type: 'UPDATE-NEW-MESSAGE-DATA-MESSAGE'
+	message: string
+}
+
+export type followACType = {
+	type: 'FOLLOW'
+	userId: number
+}
+
+export type unfollowACType = {
+	type: 'UNFOLLOW'
+	userId: number
+}
+
+export type setUsersACType = {
+	type: 'SET-USERS'
+	users: UsersPageType
 }
 
 export default store
