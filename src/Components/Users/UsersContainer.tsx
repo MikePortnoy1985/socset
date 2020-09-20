@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Users from './Users'
-import { reduxStoreType, UsersPageType } from '../redux/redux-store'
+import { ActionType, reduxStoreType, UsersPageType } from '../redux/redux-store'
 import { followAC, setUsersAC, unfollowAC } from '../redux/UsersPageReducer'
+import { Dispatch } from 'redux'
+import Users from './Users'
 
 let mapStateToProps = (state: reduxStoreType) => {
 	return {
@@ -10,7 +11,7 @@ let mapStateToProps = (state: reduxStoreType) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch: (arg0: { type: 'FOLLOW' | 'UNFOLLOW' | 'SET-USERS'; userId?: number; users?: UsersPageType }) => void) => {
+let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
 	return {
 		onFollowChange: (userdId: number) => {
 			dispatch(followAC(userdId))

@@ -45,18 +45,16 @@ export type FriendsType = {
 	name: string
 }
 
-export type UserLocationType = {
-	city: string
-	country: string
-}
-
 export type UserType = {
+	name: string
 	id: number
-	photoUrl: string
+	uniqueUrlName: string | null
+	photos: {
+		small: string | null
+		large: string | null
+	}
+	status: string | null
 	followed: boolean
-	fullName: string
-	status: string
-	location: UserLocationType
 }
 
 export type UsersPageType = {

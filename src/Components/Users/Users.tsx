@@ -1,5 +1,7 @@
 import React from 'react'
 import { UsersPageType } from '../redux/redux-store'
+import axios from 'axios'
+import avatar from '../assets/images/index.jpg'
 
 export type UsersPropsType = {
 	users: UsersPageType
@@ -13,37 +15,44 @@ const imgStyles = {
 	height: '100px',
 }
 
-const Users = ({ users, onFollowChange, setUsersHandler, onUnFollowChange }: UsersPropsType) => {
-	return (
-		<div>
-			{users.users.map((i) => (
-				<div key={i.id}>
-					<span>
-						<div>
-							<img style={imgStyles} src={i.photoUrl} alt={'avatar'} />
-						</div>
-						<div>
-							{i.followed ? (
-								<button onClick={() => onUnFollowChange(i.id)}>Unfollow</button>
-							) : (
-								<button onClick={() => onFollowChange(i.id)}>Follow</button>
-							)}
-						</div>
-					</span>
-					<span>
+class UsersC extends React.Component<UsersPropsType, UsersPageType> {
+	constructor(props: UsersPropsType) {
+		super(props)
+	}
+
+	componentDidMount() {
+		axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response) => {
+			this.props.setUsersHandler(response.data.items)
+		})
+	}
+
+	render() {
+		const { users, onFollowChange, onUnFollowChange } = this.props
+		return (
+			<div>
+				{users.users.map((i) => (
+					<div key={i.id}>
 						<span>
-							<div>{i.fullName}</div>
+							<div>
+								<img style={imgStyles} src={i.photos.small === null ? avatar : i.photos.small} alt={'avatar'} />
+							</div>
+							<div>
+								{i.followed ? (
+									<button onClick={() => onUnFollowChange(i.id)}>Unfollow</button>
+								) : (
+									<button onClick={() => onFollowChange(i.id)}>Follow</button>
+								)}
+							</div>
+						</span>
+						<span>
+							<div>{i.name}</div>
 							<div>{i.status}</div>
 						</span>
-						<span>
-							<div>{i.location.country}</div>
-							<div>{i.location.city}</div>
-						</span>
-					</span>
-				</div>
-			))}
-		</div>
-	)
+					</div>
+				))}
+			</div>
+		)
+	}
 }
 
-export default Users
+export default UsersC

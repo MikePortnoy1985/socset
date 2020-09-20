@@ -1,36 +1,11 @@
-import { ActionType, followACType, setUsersACType, unfollowACType, UsersPageType, UserType } from './redux-store'
+import { ActionType, followACType, setUsersACType, unfollowACType, UsersPageType } from './redux-store'
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 
 let initialStore = {
-	users: [
-		{
-			id: 1,
-			photoUrl: 'https://www.eg.ru/wp-content/uploads/2020/05/nag-pre022109.jpg',
-			followed: true,
-			fullName: 'Dmitry',
-			status: 'I am a boss',
-			location: { city: 'Minsk', country: 'Belarus' },
-		},
-		{
-			id: 2,
-			photoUrl: 'https://www.eg.ru/wp-content/uploads/2020/05/nag-pre022109.jpg',
-			followed: false,
-			fullName: 'Vova',
-			status: 'I am web developer',
-			location: { city: 'Moscow', country: 'Russia' },
-		},
-		{
-			id: 3,
-			photoUrl: 'https://www.eg.ru/wp-content/uploads/2020/05/nag-pre022109.jpg',
-			followed: true,
-			fullName: 'Roma',
-			status: 'I am a gamer',
-			location: { city: 'Penza', country: 'Russia' },
-		},
-	],
+	users: [],
 }
 
 const usersPageReducer = (state: UsersPageType = initialStore, action: ActionType) => {
@@ -67,8 +42,8 @@ const usersPageReducer = (state: UsersPageType = initialStore, action: ActionTyp
 	}
 }
 
-export const followAC = (userId: number): followACType => ({ type: FOLLOW, userId: userId })
-export const unfollowAC = (userId: number): unfollowACType => ({ type: UNFOLLOW, userId: userId })
-export const setUsersAC = (users: UsersPageType): setUsersACType => ({ type: SET_USERS, users: users })
+export const followAC = (userId: number): followACType => ({ type: FOLLOW, userId })
+export const unfollowAC = (userId: number): unfollowACType => ({ type: UNFOLLOW, userId })
+export const setUsersAC = (users: UsersPageType): setUsersACType => ({ type: SET_USERS, users })
 
 export default usersPageReducer

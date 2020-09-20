@@ -1,7 +1,8 @@
 import { addPostAC, updateNewPostTextAC } from '../../redux/ProfilePageReducer'
 import MyPosts from './MyPosts'
 import { connect } from 'react-redux'
-import { reduxStoreType } from '../../redux/redux-store'
+import { ActionType, reduxStoreType } from '../../redux/redux-store'
+import { Dispatch } from 'redux'
 
 let mapStateToProps = (state: reduxStoreType) => {
 	return {
@@ -9,7 +10,7 @@ let mapStateToProps = (state: reduxStoreType) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch: (arg0: { type: 'UPDATE-NEW-POST-TEXT' | 'ADD-POST'; postText?: string }) => void) => {
+let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
 	return {
 		updateNewPostText: (text: string) => {
 			dispatch(updateNewPostTextAC(text))
