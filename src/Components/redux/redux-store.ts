@@ -3,24 +3,20 @@ import profilePageReducer from './ProfilePageReducer'
 import dialogsPageReducer from './DialogsPageReducer'
 import sideBarReducer from './SideBarReducer'
 import usersPageReducer from './UsersPageReducer'
+import authReducer from './auth-reducer'
 
 const reducers = combineReducers({
 	profilePageReducer: profilePageReducer,
 	dialogsPageReducer: dialogsPageReducer,
 	sideBarReducer: sideBarReducer,
 	usersPageReducer: usersPageReducer,
+	auth: authReducer
 })
 
 type reducersType = typeof reducers
 export type reduxStoreType = ReturnType<reducersType>
 
 let store = createStore(reducers)
-
-// export type ReduxType = {
-// 	subscribe: (callback: () => void) => void
-// 	getState: () => reduxStoreType
-// 	dispatch: ({ type }: { type: string }) => void
-// }
 
 //////////////////////////////// ======>> StateTypes <<======== ///////////////////////////////////////////////////
 
@@ -57,8 +53,35 @@ export type UserType = {
 	followed: boolean
 }
 
+export type ProfileType = {
+	aboutMe: string | null
+	contacts: {
+		facebook: string | null
+		website: string | null
+		vk: string | null
+		twitter: string | null
+		instagram: string | null
+		youtube: string | null
+		github: string | null
+		mainLink: string | null
+	}
+	lookingForAJob: boolean
+	lookingForAJobDescription: string | null
+	fullName: string | null
+	userId: number
+	photos: {
+		small: string | null
+		large: string | null
+	}
+}
+
 export type UsersPageType = {
 	users: Array<UserType>
+	pageSize: number
+	totalUsersCount: number
+	currentPage: number
+	isFetching: boolean
+	followingInProgress: Array<number>
 }
 
 export type DialogsPageType = {
@@ -70,16 +93,18 @@ export type DialogsPageType = {
 export type ProfilePageType = {
 	posts: Array<PostItemType>
 	newPostText: string
+	profile: ProfileType
 }
 
 export type FriendsPageSectionType = {
 	friends: Array<FriendsType>
 }
 
-export type StateType = {
-	dialogsPage: DialogsPageType
-	profilePage: ProfilePageType
-	sideBar: FriendsPageSectionType
+export type AuthReducerStateType = {
+	id: number | null
+	email: string | null
+	login: string | null
+	isAuth: boolean
 }
 
 //////////////////////////////// ======>> ActionTypes <<======== ///////////////////////////////////////////////////
@@ -92,6 +117,12 @@ export type ActionType =
 	| followACType
 	| unfollowACType
 	| setUsersACType
+	| setCurrentPageACType
+	| setTotalUsersCountACType
+	| isFetchingACType
+	| setProfileACType
+	| setUserDataACType
+	| toggleFollowingProgressACType
 
 export type addPostACType = {
 	type: 'ADD-POST'
@@ -124,6 +155,37 @@ export type unfollowACType = {
 export type setUsersACType = {
 	type: 'SET-USERS'
 	users: UsersPageType
+}
+
+export type setCurrentPageACType = {
+	type: 'SET-CURRENT-PAGE'
+	currentPage: number
+}
+
+export type setTotalUsersCountACType = {
+	type: 'SET-TOTAL-USERS-COUNT'
+	totalUsersCount: number
+}
+
+export type isFetchingACType = {
+	type: 'IS-FETCHING'
+	isFetching: boolean
+}
+
+export type setProfileACType = {
+	type: 'SET-PROFILE'
+	profile: ProfileType
+}
+
+export type setUserDataACType = {
+	type: 'SET-USER-DATA'
+	data: AuthReducerStateType
+}
+
+export type toggleFollowingProgressACType = {
+	type: 'TOGGLE-IS-FETCHING'
+	isFetching: boolean
+	id: number
 }
 
 export default store

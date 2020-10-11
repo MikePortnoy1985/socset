@@ -33,11 +33,14 @@ const dialogsPageReducer = (state: DialogsPageType = initialStore, action: Actio
 				messageData: [...state.messageData, { id: 7, message: body }],
 			}
 		case UPDATE_NEW_MESSAGE_DATA_MESSAGE:
-			if (action.message)
+			if (action.message) {
 				return {
 					...state,
 					newMessageDataMessage: action.message,
 				}
+			} else {
+				return state
+			}
 		default:
 			return state
 	}

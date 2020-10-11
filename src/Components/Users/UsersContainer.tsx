@@ -1,9 +1,15 @@
-import React from 'react'
 import { connect } from 'react-redux'
-import { ActionType, reduxStoreType, UsersPageType } from '../redux/redux-store'
-import { followAC, setUsersAC, unfollowAC } from '../redux/UsersPageReducer'
-import { Dispatch } from 'redux'
-import Users from './Users'
+import { reduxStoreType } from '../redux/redux-store'
+import {
+	follow,
+	isFetching,
+	setCurrentPage,
+	setTotalUsersCount,
+	setUsers,
+	toggleFollowingProgress,
+	unfollow,
+} from '../redux/UsersPageReducer'
+import UsersAPIComponent from './UsersAPIComponent'
 
 let mapStateToProps = (state: reduxStoreType) => {
 	return {
@@ -11,18 +17,12 @@ let mapStateToProps = (state: reduxStoreType) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
-	return {
-		onFollowChange: (userdId: number) => {
-			dispatch(followAC(userdId))
-		},
-		onUnFollowChange: (userdId: number) => {
-			dispatch(unfollowAC(userdId))
-		},
-		setUsersHandler: (users: UsersPageType) => {
-			dispatch(setUsersAC(users))
-		},
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, {
+	follow,
+	unfollow,
+	setUsers,
+	setCurrentPage,
+	setTotalUsersCount,
+	isFetching,
+	toggleFollowingProgress,
+})(UsersAPIComponent)
