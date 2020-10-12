@@ -1,12 +1,7 @@
-import {
-	ActionType,
-	addPostACType,
-	PostItemType,
-	ProfilePageType,
-	ProfileType,
-	setProfileACType,
-	updateNewPostTextACType,
-} from './redux-store'
+import { ActionType, addPostACType, PostItemType, ProfilePageType, ProfileType, setProfileACType, updateNewPostTextACType } from './redux-store'
+import { usersAPI } from '../../api/api'
+import { Dispatch } from 'redux'
+import { PathParamsType } from '../Profile/ProfileContainer'
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -23,25 +18,26 @@ let initialStore = {
 	],
 	newPostText: '',
 	profile: {
-			aboutMe: null,
-			contacts: {
-			facebook:  null,
+		aboutMe: null,
+		contacts: {
+			facebook: null,
 			website: null,
-			vk:  null,
-			twitter:  null,
-			instagram:  null,
-			youtube:  null,
-			github:  null,
+			vk: null,
+			twitter: null,
+			instagram: null,
+			youtube: null,
+			github: null,
 			mainLink: null,
-			},
-			lookingForAJob: false,
-			lookingForAJobDescription:  null,
-			fullName:  null,
-			userId: 0,
-			photos: {
-				small:  null,
-				large:  null,
-			}},
+		},
+		lookingForAJob: false,
+		lookingForAJobDescription: null,
+		fullName: null,
+		userId: 0,
+		photos: {
+			small: null,
+			large: null,
+		},
+	},
 }
 
 const profilePageReducer = (state: ProfilePageType = initialStore, action: ActionType) => {
@@ -80,9 +76,13 @@ const profilePageReducer = (state: ProfilePageType = initialStore, action: Actio
 }
 
 export const addPost = (): addPostACType => ({ type: ADD_POST })
-
 export const updateNewPostText = (text: string): updateNewPostTextACType => ({ type: UPDATE_NEW_POST_TEXT, postText: text })
-
 export const setProfile = (profile: ProfileType): setProfileACType => ({ type: SET_PROFILE, profile: profile })
+
+export const getUserProfile = (id='2') => (dispatch: Dispatch<ActionType>) => {
+	usersAPI.getProfile(id).then((response) => {
+		dispatch(setProfile(response.data))
+	})
+}
 
 export default profilePageReducer

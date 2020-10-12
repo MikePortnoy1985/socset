@@ -8,47 +8,33 @@ type UsersPropsType = {
 	users: UsersPageType
 	follow: (id: number) => void
 	unfollow: (id: number) => void
-	setUsers: (users: UsersPageType) => void
 	setCurrentPage: (currentPage: number) => void
-	setTotalUsersCount: (totalUsersCount: number) => void
-	isFetching: (isFetching: boolean) => void
-	toggleFollowingProgress: (isFetching:boolean, id: number) => void
+	getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 }
 
 class UsersAPIComponent extends React.Component<UsersPropsType, UsersPageType> {
-
 	componentDidMount() {
-		this.props.isFetching(true)
-		usersAPI.getUsers(this.props.users.currentPage, this.props.users.pageSize).then((data) => {
-				this.props.isFetching(false)
-				this.props.setUsers(data.items)
-				this.props.setTotalUsersCount(data.totalCount / 100)
-			})
+		this.props.getUsersThunkCreator(this.props.users.currentPage, this.props.users.pageSize)
 	}
 
 	switchPage = (pageNumber: number) => {
-		this.props.setCurrentPage(pageNumber)
-		this.props.isFetching(true)
-		usersAPI.getUsers(pageNumber, this.props.users.pageSize).then((data) => {
-			this.props.isFetching(false)
-			this.props.setUsers(data.items)
-		})
+		this.props.getUsersThunkCreator(pageNumber, this.props.users.pageSize)
 	}
 
 	render() {
-		return(
-		<>
-			{this.props.users.isFetching
-				? <CircularProgress />
-				: <UsersPresentation
-					switchPage={this.switchPage}
-					users={this.props.users}
-					onFollowChange={this.props.follow}
-					onUnFollowChange={this.props.unfollow}
-					toggleFollowingProgress={this.props.toggleFollowingProgress}
-				/>
-			}
-		</>
+		return (
+			<>
+				{this.props.users.isFetching ? (
+					<CircularProgress />
+				) : (
+					<UsersPresentation
+						switchPage={this.switchPage}
+						users={this.props.users}
+						onFollowChange={this.props.follow}
+						onUnFollowChange={this.props.unfollow}
+					/>
+				)}
+			</>
 		)
 	}
 }
