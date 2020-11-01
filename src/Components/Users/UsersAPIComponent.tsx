@@ -2,7 +2,6 @@ import React from 'react'
 import { UsersPageType } from '../redux/redux-store'
 import UsersPresentation from './UsersPresentation'
 import { CircularProgress } from '@material-ui/core'
-import { usersAPI } from '../../api/api'
 
 type UsersPropsType = {
 	users: UsersPageType

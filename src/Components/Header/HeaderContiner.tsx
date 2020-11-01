@@ -3,7 +3,6 @@ import Header from './Header'
 import { connect } from 'react-redux'
 import { getAuthUserData } from '../redux/auth-reducer'
 import { AuthReducerStateType, reduxStoreType } from '../redux/redux-store'
-import { authAPI } from '../../api/api'
 
 type PropsType = {
 	isAuth: boolean

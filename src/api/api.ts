@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export type usersAPIType={
-	getUsers: (currentPage:number, pageSize:number)=>void
+export type usersAPIType = {
+	getUsers: (currentPage: number, pageSize: number) => void
 }
 
 const instance = axios.create({
@@ -13,24 +13,34 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-	getUsers(currentPage:number , pageSize:number ){
-		return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-			.then((response) => response.data)
+	getUsers(currentPage: number, pageSize: number) {
+		return instance.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => response.data)
 	},
-	follow(id:number){
+	follow(id: number) {
 		return instance.post(`follow/${id}`)
 	},
-	unfollow(id:number){
+	unfollow(id: number) {
 		return instance.delete(`follow/${id}`)
 	},
-	getProfile(userId= '2'){
+	getProfile(userId = '2') {
+		return profileAPI.getProfile(userId)
+	},
+}
+
+export const profileAPI = {
+	getProfile(userId = '2') {
 		return instance.get(`profile/${userId}`)
-	}
+	},
+	getStatus(userId = '2') {
+		return instance.get(`profile/status/${userId}`)
+	},
+	updateStatus(status: string) {
+		return instance.put(`profile/status`, {status})
+	},
 }
 
 export const authAPI = {
-	me(){
+	me() {
 		return instance.get(`auth/me`)
-	}
+	},
 }
-

@@ -2,13 +2,14 @@ import Dialogs from './Dialogs'
 import { addMessageAC, updateNewPostMessageDataMessageAC } from '../redux/DialogsPageReducer'
 import { connect } from 'react-redux'
 import { ActionType, reduxStoreType } from '../redux/redux-store'
-import { Dispatch } from 'redux'
+import { compose, Dispatch } from 'redux'
+import { WithAuthRedirect } from '../HOC/WithAuthRedirect'
 
 let mapStateToProps = (state: reduxStoreType) => {
 	return {
 		dialogs: state.dialogsPageReducer,
-		isAuth: state.auth.isAuth
 	}
+
 }
 
 let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
@@ -22,6 +23,9 @@ let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
 	}
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export default compose<React.ComponentClass>(
+	connect(mapStateToProps, mapDispatchToProps),
+	WithAuthRedirect
+)(Dialogs)
 
-export default DialogsContainer
+

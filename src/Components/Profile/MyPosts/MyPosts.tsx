@@ -10,7 +10,9 @@ type MyPostsPropsType = {
 }
 
 const MyPosts = ({ posts, updateNewPostText, addPost }: MyPostsPropsType) => {
-	const postsElements = posts.posts.map((p: PostItemType) => <Post id={p.id} message={p.post} likesCount={p.likesCount} />)
+	const postsElements = posts.posts.map((p: PostItemType) => (
+		<Post id={p.id} message={p.post} likesCount={p.likesCount} />
+	))
 
 	let newPostElement = React.createRef<HTMLTextAreaElement>()
 

@@ -5,6 +5,7 @@ import sideBarReducer from './SideBarReducer'
 import usersPageReducer from './UsersPageReducer'
 import authReducer from './auth-reducer'
 import thunkMiddleware from 'redux-thunk'
+import {reducer as formReducer} from 'redux-form'
 
 const reducers = combineReducers({
 	profilePageReducer: profilePageReducer,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
 	sideBarReducer: sideBarReducer,
 	usersPageReducer: usersPageReducer,
 	auth: authReducer,
+	form: formReducer
 })
 
 type reducersType = typeof reducers
@@ -95,6 +97,7 @@ export type ProfilePageType = {
 	posts: Array<PostItemType>
 	newPostText: string
 	profile: ProfileType
+	status: string
 }
 
 export type FriendsPageSectionType = {
@@ -124,6 +127,7 @@ export type ActionType =
 	| setProfileACType
 	| setUserDataACType
 	| toggleFollowingProgressACType
+	| setStatusACType
 
 export type addPostACType = {
 	type: 'ADD-POST'
@@ -187,6 +191,11 @@ export type toggleFollowingProgressACType = {
 	type: 'TOGGLE-IS-FETCHING'
 	isFetching: boolean
 	id: number
+}
+
+export type setStatusACType = {
+	type: 'SET-STATUS'
+	status: string
 }
 
 export default store
