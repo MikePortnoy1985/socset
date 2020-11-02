@@ -90,12 +90,10 @@ export type UsersPageType = {
 export type DialogsPageType = {
 	messageData: Array<MessageItemType>
 	dialogData: Array<DialogItemType>
-	newMessageDataMessage: string
 }
 
 export type ProfilePageType = {
 	posts: Array<PostItemType>
-	newPostText: string
 	profile: ProfileType
 	status: string
 }
@@ -115,9 +113,7 @@ export type AuthReducerStateType = {
 
 export type ActionType =
 	| addPostACType
-	| updateNewPostTextACType
 	| addMessageACType
-	| updateNewPostMessageDataMessageACType
 	| followACType
 	| unfollowACType
 	| setUsersACType
@@ -131,19 +127,11 @@ export type ActionType =
 
 export type addPostACType = {
 	type: 'ADD-POST'
-}
-
-export type updateNewPostTextACType = {
-	type: 'UPDATE-NEW-POST-TEXT'
-	postText: string
+	text: string
 }
 
 export type addMessageACType = {
 	type: 'SEND-MESSAGE'
-}
-
-export type updateNewPostMessageDataMessageACType = {
-	type: 'UPDATE-NEW-MESSAGE-DATA-MESSAGE'
 	message: string
 }
 

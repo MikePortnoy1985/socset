@@ -1,4 +1,4 @@
-import { addPost, updateNewPostText } from '../../redux/ProfilePageReducer'
+import { addPost } from '../../redux/ProfilePageReducer'
 import MyPosts from './MyPosts'
 import { connect } from 'react-redux'
 import { ActionType, reduxStoreType } from '../../redux/redux-store'
@@ -12,11 +12,8 @@ let mapStateToProps = (state: reduxStoreType) => {
 
 let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
 	return {
-		updateNewPostText: (text: string) => {
-			dispatch(updateNewPostText(text))
-		},
-		addPost: () => {
-			dispatch(addPost())
+		addPost: (text: string) => {
+			dispatch(addPost(text))
 		},
 	}
 }

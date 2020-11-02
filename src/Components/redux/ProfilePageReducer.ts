@@ -6,14 +6,12 @@ import {
 	ProfileType,
 	setProfileACType,
 	setStatusACType,
-	updateNewPostTextACType,
 } from './redux-store'
 import { profileAPI, usersAPI } from '../../api/api'
 import { Dispatch } from 'redux'
 
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_PROFILE = 'SET-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 
@@ -26,7 +24,6 @@ let initialStore = {
 		{ id: 5, post: 'Salut', likesCount: 122 },
 		{ id: 6, post: 'Zdarova', likesCount: 512 },
 	],
-	newPostText: '',
 	profile: {
 		aboutMe: null,
 		contacts: {
@@ -56,23 +53,13 @@ const profilePageReducer = (state: ProfilePageType = initialStore, action: Actio
 		case ADD_POST: {
 			let newPost: PostItemType = {
 				id: 5,
-				post: state.newPostText,
+				post: action.text,
 				likesCount: 0,
 			}
 			return {
 				...state,
 				posts: [...state.posts, newPost],
 				newPostText: '',
-			}
-		}
-		case UPDATE_NEW_POST_TEXT: {
-			if (action.postText) {
-				return {
-					...state,
-					newPostText: action.postText,
-				}
-			} else {
-				return state
 			}
 		}
 		case SET_PROFILE: {
@@ -92,11 +79,8 @@ const profilePageReducer = (state: ProfilePageType = initialStore, action: Actio
 	}
 }
 
-export const addPost = (): addPostACType => ({ type: ADD_POST })
-export const updateNewPostText = (text: string): updateNewPostTextACType => ({
-	type: UPDATE_NEW_POST_TEXT,
-	postText: text,
-})
+export const addPost = (text: string): addPostACType => ({ type: ADD_POST, text})
+
 export const setProfile = (profile: ProfileType): setProfileACType => ({ type: SET_PROFILE, profile: profile })
 export const setStatus = (status: string): setStatusACType => ({ type: SET_STATUS, status})
 

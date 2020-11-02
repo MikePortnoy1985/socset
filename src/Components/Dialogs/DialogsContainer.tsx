@@ -1,5 +1,5 @@
 import Dialogs from './Dialogs'
-import { addMessageAC, updateNewPostMessageDataMessageAC } from '../redux/DialogsPageReducer'
+import { addMessageAC } from '../redux/DialogsPageReducer'
 import { connect } from 'react-redux'
 import { ActionType, reduxStoreType } from '../redux/redux-store'
 import { compose, Dispatch } from 'redux'
@@ -14,11 +14,8 @@ let mapStateToProps = (state: reduxStoreType) => {
 
 let mapDispatchToProps = (dispatch: Dispatch<ActionType>) => {
 	return {
-		updateNewPostMessage: (newMessage: string) => {
-			dispatch(updateNewPostMessageDataMessageAC(newMessage))
-		},
-		sendMessage: () => {
-			dispatch(addMessageAC())
+		sendMessage: (message:string) => {
+			dispatch(addMessageAC(message))
 		},
 	}
 }
