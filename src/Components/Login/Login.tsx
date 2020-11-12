@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom'
 
 type LoginFormPropsType = {
    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+   error: string
 }
 
 const LoginForm = (props: LoginFormPropsType) => {
@@ -29,6 +30,7 @@ const LoginForm = (props: LoginFormPropsType) => {
          <div>
             <Field type={'checkbox'} name={'rememberMe'} component={Input} /> remember me
          </div>
+         {props.error && <div>{props.error}</div>}
          <div>
             <button>Login</button>
          </div>

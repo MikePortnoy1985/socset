@@ -83,12 +83,12 @@ export const addPost = (text: string): addPostACType => ({ type: ADD_POST, text 
 export const setProfile = (profile: ProfileType): setProfileACType => ({ type: SET_PROFILE, profile: profile })
 export const setStatus = (status: string): setStatusACType => ({ type: SET_STATUS, status })
 
-export const getUserProfile = (id = '2') => (dispatch: Dispatch<ActionType>) => {
+export const getUserProfile = (id: string) => (dispatch: Dispatch<ActionType>) => {
    usersAPI.getProfile(id).then((response) => {
       dispatch(setProfile(response.data))
    })
 }
-export const getStatus = (id = '2') => (dispatch: Dispatch<ActionType>) => {
+export const getStatus = (id: string) => (dispatch: Dispatch<ActionType>) => {
    profileAPI.getStatus(id).then((response) => {
       dispatch(setStatus(response.data))
    })

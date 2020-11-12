@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { ActionType, reduxStoreType } from '../redux/redux-store'
 import { compose, Dispatch } from 'redux'
 import { WithAuthRedirect } from '../HOC/WithAuthRedirect'
+import React from 'react'
 
 const mapStateToProps = (state: reduxStoreType) => {
    return {

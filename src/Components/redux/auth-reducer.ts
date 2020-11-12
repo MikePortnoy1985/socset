@@ -1,6 +1,7 @@
 import { ActionType, AuthReducerStateType, setUserDataACType } from './redux-store'
 import { Dispatch } from 'redux'
 import { authAPI } from '../../api/api'
+import { stopSubmit } from 'redux-form'
 
 const SET_USER_DATA = 'SET-USER-DATA'
 
@@ -38,6 +39,9 @@ export const login = (email: string, password: string, rememberMe = false) => (d
    authAPI.login(email, password, rememberMe).then((response) => {
       if (response.data.resultCode === 0) {
          dispatch(getAuthUserData())
+      } else {
+         const message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+         dispatch(stopSubmit('login', { _error: message }))
       }
    })
 }
@@ -45,7 +49,7 @@ export const login = (email: string, password: string, rememberMe = false) => (d
 export const logout = () => (dispatch: any) => {
    authAPI.logout().then((response) => {
       if (response.data.resultCode === 0) {
-         dispatch(setUserData({ id: null, email: null, login: null, isAuth: true }))
+         dispatch(setUserData({ id: null, email: null, login: null, isAuth: false }))
       }
    })
 }

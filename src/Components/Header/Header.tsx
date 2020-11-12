@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './Header.module.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 type PropsType = {
    isAuth: boolean
@@ -17,9 +17,22 @@ const Header = ({ isAuth, login, logout }: PropsType) => {
          />
          <div className={classes.loginBlock}>
             <div>{isAuth ? login : <NavLink to={'/login'}>Login</NavLink>}</div>
-            {login && <button onClick={() => logout()}>Log out </button>}
+            {login && <Logout logout={logout} />}
          </div>
       </header>
+   )
+}
+
+type LogoutPropsType = {
+   logout: () => void
+}
+
+const Logout = (props: LogoutPropsType) => {
+   return (
+      <>
+         <button onClick={() => props.logout()}>Log out </button>
+         <Redirect to={'/login'} />
+      </>
    )
 }
 
