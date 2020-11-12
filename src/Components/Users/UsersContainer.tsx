@@ -3,15 +3,15 @@ import { reduxStoreType } from '../redux/redux-store'
 import { follow, getUsersThunkCreator, setCurrentPage, unfollow } from '../redux/UsersPageReducer'
 import UsersAPIComponent from './UsersAPIComponent'
 
-let mapStateToProps = (state: reduxStoreType) => {
-	return {
-		users: state.usersPageReducer,
-	}
+const mapStateToProps = (state: reduxStoreType) => {
+   return {
+      users: state.usersPageReducer,
+   }
 }
 
 export default connect(mapStateToProps, {
-	follow,
-	unfollow,
-	setCurrentPage,
-	getUsersThunkCreator,
+   follow,
+   unfollow,
+   setCurrentPage,
+   getUsersThunkCreator,
 })(UsersAPIComponent)

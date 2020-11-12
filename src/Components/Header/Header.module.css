@@ -1,17 +1,17 @@
 .header {
-	grid-area: h;
-	background-color: green;
+   grid-area: h;
+   background-color: green;
 }
 
 .header img {
-	width: 70px;
-	height: 70px;
+   width: 70px;
+   height: 70px;
 }
 
 .loginBlock {
-	float: right;
+   float: right;
 }
 
 .loginBlock a {
-	color: white;
+   color: white;
 }
