@@ -2,7 +2,7 @@ import React from 'react'
 import classes from './ProfileInfo.module.css'
 import { ProfileType } from '../../redux/redux-store'
 import { CircularProgress } from '@material-ui/core'
-import ProfileStatus from './ProfileStatus'
+import { ProfileStatusWithHooks } from './ProfileStatusWithHooks'
 
 type PropsType = {
    profile: ProfileType
@@ -32,7 +32,7 @@ const ProfileInfo = (props: PropsType) => {
                      }
                      alt={'missing img'}
                   />
-                  <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+                  <ProfileStatusWithHooks propsStatus={props.status} updateStatus={props.updateStatus} />
                </>
             ) : (
                <CircularProgress />

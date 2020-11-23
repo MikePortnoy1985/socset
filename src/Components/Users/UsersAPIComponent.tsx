@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ComponentState } from 'react'
 import { UsersPageType } from '../redux/redux-store'
 import UsersPresentation from './UsersPresentation'
 import { CircularProgress } from '@material-ui/core'
@@ -11,7 +11,7 @@ type UsersPropsType = {
    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 }
 
-class UsersAPIComponent extends React.Component<UsersPropsType, UsersPageType> {
+class UsersAPIComponent extends React.Component<UsersPropsType, ComponentState> {
    componentDidMount() {
       this.props.getUsersThunkCreator(this.props.users.currentPage, this.props.users.pageSize)
    }

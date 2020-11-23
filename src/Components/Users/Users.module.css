@@ -3,6 +3,19 @@
    height: 100px;
 }
 
+.page{
+   cursor: pointer;
+  
+}
+
 .selectedPage {
+   font-weight: bold;
+   text-decoration: underline;
+   
+}
+
+.page:hover{
+   cursor: pointer;
+   text-decoration: underline;
    font-weight: bold;
 }

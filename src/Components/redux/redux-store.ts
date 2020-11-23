@@ -160,7 +160,7 @@ export type setProfileACType = {
 }
 
 export type setUserDataACType = {
-   type: 'SET-USER-DATA'
+   type: 'auth/SET-USER-DATA'
    data: AuthReducerStateType
 }
 

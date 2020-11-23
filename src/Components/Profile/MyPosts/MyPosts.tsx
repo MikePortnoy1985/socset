@@ -1,32 +1,39 @@
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+import TextArea from '../../FormControl/FormCOntrols'
+import { PostItemType, ProfilePageType } from '../../redux/redux-store'
+import { maxLengthCreator, required } from '../../utils/validators/validators'
 import classes from './MyPosts.module.css'
 import Post from './Post/Post'
-import { PostItemType, ProfilePageType } from '../../redux/redux-store'
-import { Field, reduxForm } from 'redux-form'
-import { maxLengthCreator, required } from '../../utils/validators/validators'
-import TextArea from '../../FormControl/FormCOntrols'
 
 type MyPostsPropsType = {
    posts: ProfilePageType
    addPost: (text: string) => void
 }
 
-const MyPosts = ({ posts, addPost }: MyPostsPropsType) => {
-   const postsElements = posts.posts.map((p: PostItemType) => (
-      <Post id={p.id} message={p.post} likesCount={p.likesCount} />
-   ))
-
-   const onAddPost = (values: any) => {
-      addPost(values.newPostText)
+class MyPosts extends React.Component<MyPostsPropsType, MyPosts> {
+   shouldComponentUpdate(nextProps: MyPostsPropsType, nextState: MyPosts) {
+      return nextProps !== this.props || nextState !== this.state
    }
 
-   return (
-      <div className={classes.postsBlock}>
-         <h3>My posts</h3>
-         <AddNewPostRedux onSubmit={onAddPost} />
-         <div className={classes.posts}>{postsElements}</div>
-      </div>
-   )
+   render() {
+      const { posts, addPost } = this.props
+      const postsElements = posts.posts.map((p: PostItemType) => (
+         <Post key={p.id} id={p.id} message={p.post} likesCount={p.likesCount} />
+      ))
+
+      const onAddPost = (values: any) => {
+         addPost(values.newPostText)
+      }
+
+      return (
+         <div className={classes.postsBlock}>
+            <h3>My posts</h3>
+            <AddNewPostRedux onSubmit={onAddPost} />
+            <div className={classes.posts}>{postsElements}</div>
+         </div>
+      )
+   }
 }
 
 type AddNewPostFormType = {

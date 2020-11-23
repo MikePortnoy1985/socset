@@ -83,23 +83,20 @@ export const addPost = (text: string): addPostACType => ({ type: ADD_POST, text 
 export const setProfile = (profile: ProfileType): setProfileACType => ({ type: SET_PROFILE, profile: profile })
 export const setStatus = (status: string): setStatusACType => ({ type: SET_STATUS, status })
 
-export const getUserProfile = (id: string) => (dispatch: Dispatch<ActionType>) => {
-   usersAPI.getProfile(id).then((response) => {
-      dispatch(setProfile(response.data))
-   })
+export const getUserProfile = (id: string) => async (dispatch: Dispatch<ActionType>) => {
+   const response = await usersAPI.getProfile(id)
+   dispatch(setProfile(response.data))
 }
-export const getStatus = (id: string) => (dispatch: Dispatch<ActionType>) => {
-   profileAPI.getStatus(id).then((response) => {
-      dispatch(setStatus(response.data))
-   })
+export const getStatus = (id: string) => async (dispatch: Dispatch<ActionType>) => {
+   const response = await profileAPI.getStatus(id)
+   dispatch(setStatus(response.data))
 }
 
-export const updateStatus = (status: string) => (dispatch: Dispatch<ActionType>) => {
-   profileAPI.updateStatus(status).then((response) => {
-      if (response.data.resultCode === 0) {
-         dispatch(setStatus(status))
-      }
-   })
+export const updateStatus = (status: string) => async (dispatch: Dispatch<ActionType>) => {
+   const response = await profileAPI.updateStatus(status)
+   if (response.data.resultCode === 0) {
+      dispatch(setStatus(status))
+   }
 }
 
 export default profilePageReducer
